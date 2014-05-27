@@ -1,27 +1,19 @@
 {
   "name": "LiveTW",
   "manifest_version": 2,
-  "version": "0.3.12",
-  "browser_action": {
-    "default_icon": "image/icon/LiveTW.png",
-    "default_title": "LiveTW",
-    "default_popup": "index.html"
+  "version": "0.3.15",
+  "icons": {
+    "128": "image/icon/LiveTW128.png"
   },
-  "background": {
-    "scripts": ["plugin/parse.js", "config.js", "script/parse.js", "background/background.js"]
+  "app": {
+    "launch": {
+      "local_path": "index.html"
+    }
   },
   "permissions": [
     "*://g0v.github.io/*",
-    "*://www.facebook.com/events/*",
-    "pushMessaging",
+    "*://www.ustream.tv/*",
     "notifications",
     "storage"
-  ],
-  "content_scripts": [
-    {
-      "matches": ["*://www.facebook.com/events/*"],
-      "css": ["content/content.css"],
-      "js": ["plugin/jquery.js", "plugin/parse.js", "content/content.js"]
-    }
   ]
 }

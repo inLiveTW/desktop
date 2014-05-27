@@ -1,78 +1,46 @@
 // Ionic Starter App
-angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
+angular.module('starter', ['ionic', 'iopro', 'starter.services', 'starter.controllers'])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
 
   $stateProvider
-    .state('tab', {
-      url: '/tab',
+    .state('channel', {
+      url: "/channel",
       abstract: true,
-      templateUrl: 'template/tab.html'
+      templateUrl: "template/channel.html",
+      controller: 'ChannelCtrl'
     })
-    .state('tab.channel', {
-      url: '/channel',
+    .state('channel.live', {
+      url: '/live/:vid',
       views: {
-        'channel-tab': {
-          templateUrl: 'template/channel.html',
-          controller: 'ChannelCtrl'
-        }
-      }
-    })
-    .state('tab.live', {
-      url: '/live',
-      views: {
-        'channel-tab': {
+        'main-view': {
           templateUrl: 'template/live.html',
           controller: 'LiveCtrl'
         }
       }
     })
-    .state('tab.news', {
-      url: '/news',
+    .state('channel.home', {
+      url: '/home',
       views: {
-        'news-tab': {
-          templateUrl: 'template/news.html',
-          controller: 'NewsCtrl'
+        'main-view': {
+          templateUrl: 'template/home.html'
         }
       }
-    })
-    .state('tab.report', {
-      url: '/news/:id',
-      views: {
-        'news-tab': {
-          templateUrl: 'template/report.html',
-          controller: 'ReportCtrl'
-        }
-      }
-    })
-    .state('tab.event', {
-      url: '/event',
-      views: {
-        'event-tab': {
-          templateUrl: 'template/event.html',
-          controller: 'EventCtrl'
-        }
-      }
-    })
-    .state('tab.setting', {
-      url: '/setting',
-      views: {
-        'setting-tab': {
-          templateUrl: 'template/setting.html',
-          controller: 'SettingCtrl'
-        }
-      }
-    })
+    });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/live');
+  $urlRouterProvider.otherwise('/channel/home');
 
+   $sceDelegateProvider.resourceUrlWhitelist([
+     'self',
+     'http://www.ustream.tv/embed/*',
+     'http://www.youtube.com/embed/*']);
 })
 
 .filter('toDateTime', function(){
   return function(str){
     var time = new Date(str);
-    return time.toLocaleDateString() + ' ' + time.toLocaleTimeString();
+    time.setHours(time.getHours()+8);
+    return time.toISOString().replace('T',' ').replace(/\.\w+/,'');
   };
 })
 
@@ -114,7 +82,4 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 })
 
 .run(function($rootScope){
-  $rootScope.open = function(url){
-    window.open(url, '_blank');
-  };
 });
