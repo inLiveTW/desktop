@@ -1,6 +1,17 @@
-LiveTW for chrome
+inLiveTW for Desktop
 =======
 
+## Pre-installation
+
+- Install [Node.js](http://nodejs.org/)
+
+## Installation
+
+`npm i`
+
+`npm start`
+
+And then open `http://localhost:3000/` . It would livereload when you are developing.
 
 ## License
 
